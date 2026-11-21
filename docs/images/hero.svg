@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+  <defs>
+    <linearGradient id="hb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E1B4B"/><stop offset="1" stop-color="#4C1D95"/></linearGradient>
+    <radialGradient id="glow" cx=".85" cy=".2" r=".6"><stop offset="0" stop-color="#DB2777" stop-opacity=".55"/><stop offset="1" stop-color="#DB2777" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="360" rx="28" fill="url(#hb)"/>
+  <rect width="1200" height="360" rx="28" fill="url(#glow)"/>
+  <g opacity=".18" stroke="#fff" stroke-width="5" stroke-linecap="round">
+    <path d="M700 300v-40M720 300v-80M740 300v-56M760 300v-110M780 300v-70M800 300v-130M820 300v-90M840 300v-50M860 300v-100M880 300v-64M900 300v-120M920 300v-80M940 300v-44M960 300v-96M980 300v-60M1000 300v-30M1020 300v-70M1040 300v-40M1060 300v-86M1080 300v-50M1100 300v-24M1120 300v-60M1140 300v-34"/>
+  </g>
+  <g transform="translate(64,72) scale(0.84)">   <defs>     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">       <stop offset="0" stop-color="#6D28D9"/>       <stop offset="0.55" stop-color="#DB2777"/>       <stop offset="1" stop-color="#F59E0B"/>     </linearGradient>   </defs>   <rect width="256" height="256" rx="56" fill="url(#bg)"/>   <!-- speech bubble -->   <path d="M60 52h136a24 24 0 0 1 24 24v84a24 24 0 0 1-24 24h-76l-38 30v-30H60a24 24 0 0 1-24-24V76a24 24 0 0 1 24-24z" fill="#fff" opacity="0.96"/>   <!-- waveform -> text lines -->   <g fill="#7C3AED">     <rect x="62" y="104" width="12" height="32" rx="6"/>     <rect x="82" y="88" width="12" height="64" rx="6"/>     <rect x="102" y="98" width="12" height="44" rx="6"/>   </g>   <g fill="#DB2777">     <rect x="128" y="94" width="66" height="12" rx="6"/>     <rect x="128" y="114" width="54" height="12" rx="6"/>     <rect x="128" y="134" width="40" height="12" rx="6"/>   </g>   <!-- phone handset badge -->   <circle cx="196" cy="190" r="40" fill="#111827"/>   <path d="M181 172c3-3 7-3 9 0l5 7c2 3 1 6-1 8l-3 3c3 6 8 11 14 14l3-3c2-2 5-3 8-1l7 5c3 2 3 6 0 9l-4 4c-4 4-10 4-15 2-12-6-22-16-28-28-2-5-2-11 2-15z" fill="#fff"/>  </g>
+  <text x="300" y="138" font-size="54" font-weight="800" fill="#fff">Call Transcripts MCP</text>
+  <text x="302" y="184" font-size="23" fill="#E9D5FF">Ask Claude what was said on your phone calls.</text>
+  <text x="302" y="216" font-size="18" fill="#C4B5FD">Cube ACR · Google Drive · Cloudflare Workers + D1 · OpenAI · MCP</text>
+  <g font-size="15" font-weight="700">
+    <rect x="302" y="250" width="176" height="38" rx="19" fill="#ffffff22" stroke="#ffffff55"/><text x="390" y="275" text-anchor="middle" fill="#fff">Free-tier hosting</text>
+    <rect x="490" y="250" width="172" height="38" rx="19" fill="#ffffff22" stroke="#ffffff55"/><text x="576" y="275" text-anchor="middle" fill="#fff">~$0.36 / call-hour</text>
+    <rect x="674" y="250" width="170" height="38" rx="19" fill="#ffffff22" stroke="#ffffff55"/><text x="759" y="275" text-anchor="middle" fill="#fff">Hebrew + English</text>
+    <rect x="856" y="250" width="196" height="38" rx="19" fill="#ffffff22" stroke="#ffffff55"/><text x="954" y="275" text-anchor="middle" fill="#fff">Agent-installable</text>
+  </g>
+</svg>

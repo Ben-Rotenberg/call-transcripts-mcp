@@ -1,0 +1,38 @@
+{
+  "name": "call-transcripts-mcp",
+  "main": "src/index.js",
+  "compatibility_date": "2025-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // Transcribe waiting recordings every 5 minutes, and apply retention.
+  "triggers": { "crons": ["*/5 * * * *"] },
+  // Replace the <...> ids with the ones `wrangler kv namespace create` and
+  // `wrangler d1 create` print (see AGENTS.md, step 3).
+  // Temporary storage for recordings pushed by the Apps Script, until transcribed
+  "kv_namespaces": [
+    { "binding": "AUDIO", "id": "<YOUR_KV_NAMESPACE_ID>" }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "call-transcripts",
+      "database_id": "<YOUR_D1_DATABASE_ID>"
+    }
+  ],
+  "vars": {
+    // Optional, only for the Drive-pull mode with a service account:
+    // the "Cube ACR" folder in Google Drive
+    "DRIVE_FOLDER_ID": "",
+    // Transcripts older than this are deleted (the audio stays in Drive)
+    "RETENTION_DAYS": "120",
+    // Main model. Calls longer than ~23 min, or failures, fall back to whisper-1
+    "TRANSCRIBE_MODEL": "gpt-4o-transcribe",
+    "TRANSCRIBE_LANGUAGE": "he",
+    // Max recordings to transcribe per cron run (keeps within free-tier limits)
+    "BATCH_SIZE": "10"
+  }
+  // Secrets (set with `npx wrangler secret put NAME`):
+  //   OPENAI_API_KEY               - OpenAI key
+  //   MCP_TOKEN                    - long random string; part of the connector URL
+  //   GOOGLE_SERVICE_ACCOUNT_JSON  - optional; only if you pull from Drive with a
+  //                                  service account instead of the Apps Script
+}

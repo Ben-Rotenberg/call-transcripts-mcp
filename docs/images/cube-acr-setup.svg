@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 560" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+  <defs><style>.p{fill:#111827}.sc{fill:#fff}.h{font-size:15px;font-weight:700;fill:#fff}.r{font-size:13px;fill:#1E293B}.m{font-size:11px;fill:#64748B}.cap{font-size:17px;font-weight:700;fill:#0F172A}.n{font-size:15px;font-weight:800;fill:#fff}</style></defs>
+  <rect width="1100" height="560" rx="24" fill="#F1F5F9"/>
+  <text x="550" y="42" text-anchor="middle" font-size="22" font-weight="800" fill="#0F172A">Cube ACR setup in four screens (illustration, not a real screenshot)</text>
+  <!-- phone template x offsets: 40, 310, 580, 850 -->
+  <g transform="translate(55,70)">
+    <rect class="p" width="210" height="420" rx="30"/><rect class="sc" x="10" y="14" width="190" height="392" rx="22"/>
+    <rect x="10" y="14" width="190" height="50" rx="22" fill="#7C3AED"/><rect x="10" y="44" width="190" height="20" fill="#7C3AED"/><text class="h" x="105" y="46" text-anchor="middle">Permissions</text>
+    <text class="r" x="24" y="96">Microphone</text><rect x="152" y="84" width="34" height="18" rx="9" fill="#22C55E"/><circle cx="177" cy="93" r="7" fill="#fff"/>
+    <text class="r" x="24" y="132">Phone &amp; contacts</text><rect x="152" y="120" width="34" height="18" rx="9" fill="#22C55E"/><circle cx="177" cy="129" r="7" fill="#fff"/>
+    <text class="r" x="24" y="168">App Connector</text><text class="m" x="24" y="184">(Accessibility)</text><rect x="152" y="156" width="34" height="18" rx="9" fill="#22C55E"/><circle cx="177" cy="165" r="7" fill="#fff"/>
+    <text class="r" x="24" y="220">Ignore battery opt.</text><rect x="152" y="208" width="34" height="18" rx="9" fill="#22C55E"/><circle cx="177" cy="217" r="7" fill="#fff"/>
+    <text class="m" x="24" y="270">Needed to record phone,</text><text class="m" x="24" y="286">WhatsApp and other VoIP calls</text>
+  </g>
+  <g transform="translate(325,70)">
+    <rect class="p" width="210" height="420" rx="30"/><rect class="sc" x="10" y="14" width="190" height="392" rx="22"/>
+    <rect x="10" y="14" width="190" height="50" rx="22" fill="#7C3AED"/><rect x="10" y="44" width="190" height="20" fill="#7C3AED"/><text class="h" x="105" y="46" text-anchor="middle">Recording</text>
+    <text class="r" x="24" y="96">Record phone calls</text><rect x="152" y="84" width="34" height="18" rx="9" fill="#22C55E"/><circle cx="177" cy="93" r="7" fill="#fff"/>
+    <text class="r" x="24" y="132">Record WhatsApp</text><rect x="152" y="120" width="34" height="18" rx="9" fill="#22C55E"/><circle cx="177" cy="129" r="7" fill="#fff"/>
+    <text class="r" x="24" y="168">Audio format</text><text class="r" x="186" y="168" text-anchor="end" fill="#7C3AED">M4A</text>
+    <text class="r" x="24" y="204">Auto-record</text><text class="r" x="186" y="204" text-anchor="end" fill="#7C3AED">All calls</text>
+    <text class="m" x="24" y="270">Keep the default file name</text><text class="m" x="24" y="286">format: the server reads the</text><text class="m" x="24" y="302">contact, number and time from it</text>
+  </g>
+  <g transform="translate(595,70)">
+    <rect class="p" width="210" height="420" rx="30"/><rect class="sc" x="10" y="14" width="190" height="392" rx="22"/>
+    <rect x="10" y="14" width="190" height="50" rx="22" fill="#7C3AED"/><rect x="10" y="44" width="190" height="20" fill="#7C3AED"/><text class="h" x="105" y="46" text-anchor="middle">Cloud backup</text>
+    <rect x="24" y="82" width="162" height="44" rx="10" fill="#EEF2FF" stroke="#6366F1"/><text class="r" x="105" y="109" text-anchor="middle" font-weight="700">Google Drive</text>
+    <text class="r" x="24" y="156">Account</text><text class="m" x="186" y="156" text-anchor="end">you@example.com</text>
+    <text class="r" x="24" y="190">Auto upload</text><rect x="152" y="178" width="34" height="18" rx="9" fill="#22C55E"/><circle cx="177" cy="187" r="7" fill="#fff"/>
+    <text class="r" x="24" y="224">Wi-Fi only</text><rect x="152" y="212" width="34" height="18" rx="9" fill="#CBD5E1"/><circle cx="161" cy="221" r="7" fill="#fff"/>
+    <text class="r" x="24" y="258">Delete after upload</text><text class="m" x="24" y="272">(optional)</text><rect x="152" y="246" width="34" height="18" rx="9" fill="#CBD5E1"/><circle cx="161" cy="255" r="7" fill="#fff"/>
+    <text class="m" x="24" y="320">Folder in Drive: "Cube ACR"</text>
+  </g>
+  <g transform="translate(865,70)">
+    <rect class="p" width="210" height="420" rx="30"/><rect class="sc" x="10" y="14" width="190" height="392" rx="22"/>
+    <rect x="10" y="14" width="190" height="50" rx="22" fill="#2563EB"/><rect x="10" y="44" width="190" height="20" fill="#2563EB"/><text class="h" x="105" y="46" text-anchor="middle">Drive · Cube ACR</text>
+    <g font-size="11" fill="#1E293B">
+      <rect x="22" y="80" width="166" height="44" rx="8" fill="#F8FAFC"/><text x="32" y="98">Alex (0500000000) ↙ (phone)</text><text x="32" y="114" fill="#64748B">2026-01-05 10-12-30.m4a</text>
+      <rect x="22" y="132" width="166" height="44" rx="8" fill="#F8FAFC"/><text x="32" y="150">Dana (whatsapp)</text><text x="32" y="166" fill="#64748B">2026-01-05 11-40-02.m4a</text>
+      <rect x="22" y="184" width="166" height="44" rx="8" fill="#F8FAFC"/><text x="32" y="202">Alex (0500000000) ↙ (phone)</text><text x="32" y="218" fill="#64748B">2026-01-05 10-12-30.json</text>
+    </g>
+    <text class="m" x="24" y="270">Recordings plus small .json</text><text class="m" x="24" y="286">files with call metadata</text><text class="m" x="24" y="302">(sample names, not real calls)</text>
+  </g>
+  <g>
+    <circle cx="160" cy="520" r="15" fill="#7C3AED"/><text class="n" x="160" y="525" text-anchor="middle">1</text><text class="cap" x="184" y="526">Grant access</text>
+    <circle cx="430" cy="520" r="15" fill="#7C3AED"/><text class="n" x="430" y="525" text-anchor="middle">2</text><text class="cap" x="454" y="526">Turn on recording</text>
+    <circle cx="700" cy="520" r="15" fill="#7C3AED"/><text class="n" x="700" y="525" text-anchor="middle">3</text><text class="cap" x="724" y="526">Back up to Drive</text>
+    <circle cx="960" cy="520" r="15" fill="#2563EB"/><text class="n" x="960" y="525" text-anchor="middle">4</text><text class="cap" x="984" y="526">Check Drive</text>
+  </g>
+</svg>

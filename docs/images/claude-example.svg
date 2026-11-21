@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+  <rect width="900" height="470" rx="24" fill="#FAF9F5"/>
+  <rect x="0" y="0" width="900" height="54" rx="24" fill="#F0EEE6"/><rect x="0" y="30" width="900" height="24" fill="#F0EEE6"/>
+  <circle cx="30" cy="27" r="7" fill="#F87171"/><circle cx="52" cy="27" r="7" fill="#FBBF24"/><circle cx="74" cy="27" r="7" fill="#34D399"/>
+  <text x="450" y="33" text-anchor="middle" font-size="15" fill="#57534E">Example conversation (illustration with made-up data)</text>
+  <rect x="430" y="80" width="430" height="64" rx="18" fill="#E7E5DF"/>
+  <text x="452" y="108" font-size="16" fill="#1C1917">What did I agree with Alex about the</text>
+  <text x="452" y="130" font-size="16" fill="#1C1917">delivery date last week?</text>
+  <rect x="40" y="168" width="250" height="34" rx="10" fill="#fff" stroke="#E7E5DF"/>
+  <rect x="52" y="178" width="14" height="14" rx="3" fill="#7C3AED"/>
+  <text x="76" y="190" font-size="13" fill="#57534E">Phone Calls · search_calls</text>
+  <rect x="40" y="214" width="290" height="34" rx="10" fill="#fff" stroke="#E7E5DF"/>
+  <rect x="52" y="224" width="14" height="14" rx="3" fill="#7C3AED"/>
+  <text x="76" y="236" font-size="13" fill="#57534E">Phone Calls · get_transcript #42</text>
+  <circle cx="56" cy="290" r="14" fill="#D97757"/><path d="M56 280v20M46 290h20M49 283l14 14M63 283l-14 14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+  <g font-size="16" fill="#1C1917">
+    <text x="84" y="296">On your call with Alex on Monday, 5 Jan at 10:12 (incoming, 6 min),</text>
+    <text x="84" y="322">you agreed to move delivery to <tspan font-weight="700">Thursday the 15th</tspan>. Alex asked you</text>
+    <text x="84" y="348">to confirm by email, and you said you'd send the updated quote</text>
+    <text x="84" y="374">by Wednesday.</text>
+  </g>
+  <text x="84" y="414" font-size="13" fill="#78716C">Transcripts are machine-made, so names and numbers may be off. Check the recording if it matters.</text>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6D28D9"/>
+      <stop offset="0.55" stop-color="#DB2777"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="url(#bg)"/>
+  <!-- speech bubble -->
+  <path d="M60 52h136a24 24 0 0 1 24 24v84a24 24 0 0 1-24 24h-76l-38 30v-30H60a24 24 0 0 1-24-24V76a24 24 0 0 1 24-24z" fill="#fff" opacity="0.96"/>
+  <!-- waveform -> text lines -->
+  <g fill="#7C3AED">
+    <rect x="62" y="104" width="12" height="32" rx="6"/>
+    <rect x="82" y="88" width="12" height="64" rx="6"/>
+    <rect x="102" y="98" width="12" height="44" rx="6"/>
+  </g>
+  <g fill="#DB2777">
+    <rect x="128" y="94" width="66" height="12" rx="6"/>
+    <rect x="128" y="114" width="54" height="12" rx="6"/>
+    <rect x="128" y="134" width="40" height="12" rx="6"/>
+  </g>
+  <!-- phone handset badge -->
+  <circle cx="196" cy="190" r="40" fill="#111827"/>
+  <path d="M181 172c3-3 7-3 9 0l5 7c2 3 1 6-1 8l-3 3c3 6 8 11 14 14l3-3c2-2 5-3 8-1l7 5c3 2 3 6 0 9l-4 4c-4 4-10 4-15 2-12-6-22-16-28-28-2-5-2-11 2-15z" fill="#fff"/>
+</svg>

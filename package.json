@@ -1,0 +1,17 @@
+{
+  "name": "call-transcripts-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 execute call-transcripts --remote --file=./schema.sql",
+    "token": "node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\""
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  },
+  "description": "Transcribe Cube ACR call recordings with OpenAI and search them from Claude over MCP (Cloudflare Worker + D1).",
+  "license": "MIT"
+}

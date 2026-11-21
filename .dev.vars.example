@@ -1,0 +1,4 @@
+# Copy to .dev.vars for `npm run dev` (local only; .dev.vars is git-ignored).
+# In production these are Worker secrets: npx wrangler secret put NAME
+OPENAI_API_KEY=sk-...
+MCP_TOKEN=generate-with-openssl-rand-hex-32
