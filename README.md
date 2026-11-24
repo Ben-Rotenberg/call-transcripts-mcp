@@ -25,7 +25,7 @@ Everything runs in accounts you own: your Google Drive, your Cloudflare account 
 1. **Cube ACR** records each call on your Android phone and uploads it to a **Google Drive** folder.
 2. A small **Google Apps Script** in your Google account checks that folder every 5 minutes.
 3. It sends new recordings to a **Cloudflare Worker**, which queues the audio in **KV**.
-4. Every 5 minutes the Worker transcribes the queue with **OpenAI** (`gpt-4o-transcribe`, falling back to `whisper-1` for long calls) and stores the text in **D1** with full-text search. The audio is then deleted from KV.
+4. Every 5 minutes the Worker transcribes the queue with **OpenAI** (`gpt-4o-transcribe`; recordings over 5 minutes are cut into pieces of up to 4.5 minutes first, see [Long calls](#long-calls)) and stores the text in **D1** with full-text search. The audio is then deleted from KV.
 5. **Claude** connects to the Worker's MCP endpoint and gets five tools.
 6. The Apps Script also saves every transcript back to Drive as a Markdown file, so you keep a permanent copy.
 
@@ -144,6 +144,7 @@ Change these in `wrangler.jsonc` (then `npx wrangler deploy`) or in the Cloudfla
 | `TRANSCRIBE_LANGUAGE` | `he` | ISO-639-1 code of your calls' language |
 | `RETENTION_DAYS` | `120` | how long transcripts stay searchable |
 | `BATCH_SIZE` | `10` | recordings per 5-minute run; keep it equal to `MAX_FILES_PER_RUN` in `Code.gs` |
+| `LONG_CALLS_PER_RUN` | `2` | long recordings (over 5 min) cut per run; raise it on the paid Workers plan |
 
 The alert email and the Markdown headings the Apps Script writes are in Hebrew. Edit `checkOpenAiHealth` and `transcriptMarkdown` in `Code.gs` to change them.
 
@@ -154,14 +155,29 @@ The alert email and the Markdown headings the Apps Script writes are in Hebrew. 
 | Nothing appears in Claude | Ask Claude to run `sync_status`. Check the Apps Script *Executions* page for errors. |
 | *"OpenAI refused the request"* warning | Your OpenAI key is invalid or out of credit. Add credit; waiting recordings are transcribed automatically within minutes. |
 | No recordings in Drive | Cube ACR backup is off, or Android is restricting the app in the background (battery optimisation). |
-| A call failed 3 times | Ask Claude: *"retry call #N"* (`sync_now` with `retry_id`). |
+| A call failed 3 times, or is marked partial | Ask Claude: *"retry call #N"* (`sync_now` with `retry_id`). The call keeps its id and its current transcript until the new one is ready. |
+| Transcripts made before v1.2 stop early | Ask Claude to run `check_truncated`, then `check_truncated` with mode `retranscribe`. |
 | Names or numbers look wrong | Transcription is automatic and doesn't separate speakers; check the recording when it matters. |
 
 Logs: Cloudflare → your Worker → *Observability*; Apps Script → *Executions*.
 
+## Long calls
+
+`gpt-4o-transcribe` stops writing after 2,048 output tokens and returns what it has so far, with no error. In Hebrew that is about 10 minutes of speech, so a single request for a longer call silently loses the end.
+
+So the Worker cuts every M4A recording over 5 minutes into pieces of 3.5 to 4.5 minutes, at the quietest moment in that window. The cut is done on the AAC frames inside the file, without re-encoding, so no audio is lost or repeated. Each piece is transcribed with the end of the previous piece's text as the prompt, which keeps names and terms consistent.
+
+- **Every piece is checked.** If a piece still reaches the token limit, it is cut in two and transcribed again.
+- **Partial transcripts are marked.** If a piece can't be transcribed in full, the call gets the status `partial`. `get_transcript`, `search_calls` and the Drive `.md` file then start with a warning that names the missing minutes.
+- **Time marks.** `get_transcript` shows a `[m:ss]` mark at the start of each piece.
+- **CPU and request limits.** Cutting takes a few milliseconds of CPU, so on the free Workers plan each 5-minute run cuts at most 2 long calls (`LONG_CALLS_PER_RUN`) and stays under 40 OpenAI requests. The rest wait for the next run.
+
+`check_truncated` finds transcripts made before this change that probably stop early. It can list them, mark them `partial`, or queue them for a new transcription. The Apps Script then sends the audio again from Drive, and each call keeps its id.
+
 ## Limits
 
-- Files over 25 MB (OpenAI's limit) are registered but not transcribed. Calls over ~23 minutes use `whisper-1`.
+- Files over 25 MB (OpenAI's limit) are registered but not transcribed.
+- Recordings that aren't M4A/MP4 can't be cut into pieces. They're sent whole, and use `whisper-1` when they are over ~23 minutes or when `gpt-4o-transcribe` hits its output limit.
 - Cloudflare's free KV allows 1,000 writes a day, which is plenty for normal use.
 - A transcript is usually ready within about 10 minutes of the recording reaching Drive.
 - Claude picks connector icons from the domain's favicon, so on `workers.dev` the connector shows a generic icon. A custom domain fixes that.
