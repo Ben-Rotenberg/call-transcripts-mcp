@@ -100,7 +100,6 @@ function pushRecordings(base, token, props) {
       if (/\.json$/i.test(name)) sidecars[name.replace(/\.json$/i, '')] = f;
       else if (/\.(m4a|mp3|mp4|wav|ogg|oga|webm|flac|amr|3gp|aac)$/i.test(name)) audio.push(f);
     }
-    if (!audio.length) { props.setProperty('INITIALIZED', '1'); return; }
 
     // Ask the Worker which files it hasn't seen yet
     const check = UrlFetchApp.fetch(base + '/ingest/' + token + '/check', {
@@ -110,18 +109,35 @@ function pushRecordings(base, token, props) {
       muteHttpExceptions: true,
     });
     if (check.getResponseCode() !== 200) throw new Error('check failed: ' + check.getResponseCode() + ' ' + check.getContentText().slice(0, 200));
-    const unknown = new Set(JSON.parse(check.getContentText()).unknown);
+    const answer = JSON.parse(check.getContentText());
+    const unknown = new Set(answer.unknown);
 
-    const todo = audio
+    // Recordings the Worker asks for again (a re-transcription, or audio that
+    // expired from its queue). Looked up by id, so older files work too.
+    const resend = [];
+    const gone = [];
+    for (const id of (answer.resend || [])) {
+      try { resend.push(DriveApp.getFileById(id)); } catch (e) { gone.push(id); }
+    }
+    if (gone.length) {
+      UrlFetchApp.fetch(base + '/ingest/' + token + '/gone', {
+        method: 'post', contentType: 'application/json', payload: JSON.stringify({ ids: gone }), muteHttpExceptions: true,
+      });
+    }
+
+    const fresh = audio
       .filter(f => unknown.has(f.getId()))
-      .sort((a, b) => b.getDateCreated() - a.getDateCreated()) // newest first
-      .slice(0, MAX_FILES_PER_RUN);
+      .sort((a, b) => b.getDateCreated() - a.getDateCreated()); // newest first
+    const todo = resend.concat(fresh).slice(0, MAX_FILES_PER_RUN);
+    if (!todo.length) { props.setProperty('INITIALIZED', '1'); return; }
 
     let sent = 0;
     for (const f of todo) {
       if (Date.now() - started > MAX_RUN_MS) break;
       const name = f.getName();
-      const meta = readSidecar(sidecars[name.replace(/\.[^.]+$/, '')]);
+      let sidecar = sidecars[name.replace(/\.[^.]+$/, '')];
+      if (!sidecar) sidecar = findSidecar(f);
+      const meta = readSidecar(sidecar);
       const size = f.getSize();
       const params = {
         id: f.getId(),
@@ -145,7 +161,7 @@ function pushRecordings(base, token, props) {
       }
       sent++;
     }
-    console.log('Sent ' + sent + ' of ' + todo.length + ' new recordings (' + unknown.size + ' unknown in window)');
+    console.log('Sent ' + sent + ' of ' + todo.length + ' recordings (' + unknown.size + ' new in window, ' + resend.length + ' asked for again)');
     if (sent === todo.length && todo.length < MAX_FILES_PER_RUN) props.setProperty('INITIALIZED', '1');
   }
 }
@@ -162,7 +178,10 @@ function exportTranscripts(base, token, props) {
     const saved = [];
     for (const c of calls) {
       const name = transcriptFileName(c);
-      if (!folder.getFilesByName(name).hasNext()) folder.createFile(name, transcriptMarkdown(c), 'text/markdown');
+      const existing = folder.getFilesByName(name);
+      // a re-transcribed call keeps its id, so its file is updated in place
+      if (existing.hasNext()) existing.next().setContent(transcriptMarkdown(c));
+      else folder.createFile(name, transcriptMarkdown(c), 'text/markdown');
       saved.push(c.id);
     }
     const ack = UrlFetchApp.fetch(base + '/ingest/' + token + '/ack', {
@@ -202,13 +221,25 @@ function transcriptMarkdown(c) {
     dur ? '- **משך:** ' + dur : null,
     '- **קובץ הקלטה:** ' + c.file_name,
     '- **תומלל ע"י:** ' + c.model,
+    c.partial_note ? '' : null,
+    c.partial_note ? '> ⚠️ **תמלול חלקי:** ' + c.partial_note : null,
     '',
     '---',
     '',
-    c.transcript || '',
+    c.transcript_marked || c.transcript || '',
     '',
   ];
   return lines.filter(l => l !== null).join('\n');
+}
+
+// Cube ACR writes "<recording name>.json" next to the recording
+function findSidecar(file) {
+  try {
+    const parents = file.getParents();
+    if (!parents.hasNext()) return null;
+    const it = parents.next().getFilesByName(file.getName().replace(/\.[^.]+$/, '') + '.json');
+    return it.hasNext() ? it.next() : null;
+  } catch (e) { return null; }
 }
 
 function readSidecar(file) {

@@ -13,14 +13,19 @@ CREATE TABLE IF NOT EXISTS calls (
   duration_sec  INTEGER,
   size_bytes    INTEGER,
   sidecar_id    TEXT,                       -- Drive id of the .json metadata file Cube ACR writes
-  status        TEXT NOT NULL DEFAULT 'pending', -- pending | processing | done | error | skipped | expired
+  status        TEXT NOT NULL DEFAULT 'pending', -- pending | processing | done | partial | error | skipped | expired
   error         TEXT,
   attempts      INTEGER NOT NULL DEFAULT 0,
   model         TEXT,
   transcript    TEXT,
   created_at    TEXT NOT NULL DEFAULT (datetime('now')),
   transcribed_at TEXT,
-  exported      INTEGER NOT NULL DEFAULT 0  -- 1 once the Apps Script saved it to Drive as .md
+  exported      INTEGER NOT NULL DEFAULT 0, -- 1 once the Apps Script saved it to Drive as .md
+  -- added in v1.2 (the Worker adds them to an existing database by itself):
+  segments      TEXT,                       -- JSON [{start,end,text,status}] per transcribed piece of audio
+  partial_note  TEXT,                       -- why the transcript is incomplete, if it is
+  needs_audio   INTEGER NOT NULL DEFAULT 0, -- 1 = waiting for the Apps Script to send the audio again
+  prev_status   TEXT                        -- status to go back to if a re-transcription fails
 );
 CREATE INDEX IF NOT EXISTS idx_calls_time ON calls(call_time);
 CREATE INDEX IF NOT EXISTS idx_calls_status ON calls(status);

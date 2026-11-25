@@ -24,7 +24,8 @@
     "DRIVE_FOLDER_ID": "",
     // Transcripts older than this are deleted (the audio stays in Drive)
     "RETENTION_DAYS": "120",
-    // Main model. Calls longer than ~23 min, or failures, fall back to whisper-1
+    // Main model. M4A calls over 5 min are cut into pieces first (it stops at
+    // 2,048 output tokens, ~10 min of Hebrew). Failed pieces fall back to whisper-1
     "TRANSCRIBE_MODEL": "gpt-4o-transcribe",
     "TRANSCRIBE_LANGUAGE": "he",
     // Max recordings to transcribe per cron run (keeps within free-tier limits)
